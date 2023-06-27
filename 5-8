@@ -1,0 +1,156 @@
+5.logisreg:
+
+# Step 1: Import the required modules
+from sklearn.datasets import make_classification
+from matplotlib import pyplot as plt
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+import pandas as pd
+
+# Step 2: Generate the dataset
+x, y = make_classification(
+    n_samples=100,
+    n_features=1,
+    n_classes=2,
+    n_clusters_per_class=1,
+    flip_y=0.03,
+    n_informative=1,
+    n_redundant=0,
+    n_repeated=0
+)
+print(y)
+
+# Step 3: visualize the data
+plt.scatter(x, y, c=y, cmap='rainbow')
+plt.title('Scatter Plot of Logistic Regression')
+plt.show()
+
+# Step 4: Split the dataset
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=1)
+
+x_train.shape
+
+# Step 4: Perform Logistic Regression
+log_reg = LogisticRegression()
+log_reg.fit(x_train, y_train)
+
+# Step 5: Make prediction using the model
+y_pred = log_reg.predict(x_test)
+
+# Step 6: Display the Confusion Matrix
+confusion_matrix(y_test, y_pred)
+
+6.knn:
+
+# Step 1: Import the required modules
+from sklearn.datasets import make_classification
+from matplotlib import pyplot as plt
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+import pandas as pd
+
+# Step 2: Generate the dataset
+x, y = make_classification(
+    n_samples=100,
+    n_features=1,
+    n_classes=2,
+    n_clusters_per_class=1,
+    flip_y=0.03,
+    n_informative=1,
+    n_redundant=0,
+    n_repeated=0
+)
+print(y)
+
+# Step 3: visualize the data
+plt.scatter(x, y, c=y, cmap='rainbow')
+plt.title('Scatter Plot of Logistic Regression')
+plt.show()
+
+# Step 4: Split the dataset
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=1)
+
+x_train.shape
+
+# Step 4: Perform Logistic Regression
+log_reg = LogisticRegression()
+log_reg.fit(x_train, y_train)
+
+# Step 5: Make prediction using the model
+y_pred = log_reg.predict(x_test)
+
+# Step 6: Display the Confusion Matrix
+confusion_matrix(y_test, y_pred)
+
+7.naivebayes:
+
+# import required libraries
+from sklearn.datasets import load_iris
+from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+# load iris dataset
+iris = load_iris()
+
+# split dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3, random_state=0)
+
+# create Naive Bayes classifier
+classifier = GaussianNB()
+
+# train the classifier using the training data
+classifier.fit(X_train, y_train)
+
+# predict the target values for the testing data
+y_pred = classifier.predict(X_test)
+
+# display confusion matrix and accuracy score
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:")
+print(cm)
+
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy Score:", acc)
+
+8.EM:
+
+import numpy as np
+from scipy.stats import norm
+
+# Define the data
+data = np.array([1.2, 2.3, 0.7, 1.6, 1.1, 1.8, 0.9, 2.2])
+
+# Initialize the parameters
+mu1 = 0
+mu2 = 1
+sigma1 = 1
+sigma2 = 1
+p1 = 0.5
+p2 = 0.5
+
+# Run the EM algorithm
+for i in range(10):
+    # E-step
+    likelihood1 = norm.pdf(data, mu1, sigma1)
+    likelihood2 = norm.pdf(data, mu2, sigma2)
+    weight1 = p1 * likelihood1 / (p1 * likelihood1 + p2 * likelihood2)
+    weight2 = p2 * likelihood2 / (p1 * likelihood1 + p2 * likelihood2)
+    
+    # M-step
+    mu1 = np.sum(weight1 * data) / np.sum(weight1)
+    mu2 = np.sum(weight2 * data) / np.sum(weight2)
+    sigma1 = np.sqrt(np.sum(weight1 * (data - mu1)**2) / np.sum(weight1))
+    sigma2 = np.sqrt(np.sum(weight2 * (data - mu2)**2) / np.sum(weight2))
+    p1 = np.mean(weight1)
+    p2 = np.mean(weight2)
+
+# Print the final estimates of the parameters
+print("mu1:", mu1)
+print("mu2:", mu2)
+print("sigma1:", sigma1)
+print("sigma2:", sigma2)
+print("p1:", p1)
+print("p2:", p2)
